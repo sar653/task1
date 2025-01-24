@@ -1,36 +1,28 @@
 import React, { useContext } from "react";
-import { DataGridContext } from "./Datagrid";
-const Row = (  {row}) => {
-  const { selectedrows, setSelectedRows } = useContext(DataGridContext);
+import { DataGridContext } from "./DataGrid";
+
+const Row = ({ row }) => {
+  const { selectedRows, setSelectedRows } = useContext(DataGridContext);
 
   const toggleRowSelection = () => {
-    const newSelection = new Set(selectedrows);
-    if(newSelection.has(row)) newSelection.delete(row)
-        else newSelection.add(row)
-    setSelectedRows(newSelection)
+    const newSelection = new Set(selectedRows);
+    if (newSelection.has(row)) newSelection.delete(row);
+    else newSelection.add(row);
+    setSelectedRows(newSelection);
   };
 
-  
-  
-  
-  
-  const isSelected=selectedrows.has(row)
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  const isSelected = selectedRows.has(row);
+
   return (
     <div
-     className={`data-grid-row  ${isSelected?" selected":""}`}
-    onClick={toggleRowSelection}>
-      {Object.keys(row).map((key) => {
-        <div> {row[key]}</div>;
-      })}
+      className={`data-grid-row ${isSelected ? "selected" : ""}`}
+      onClick={toggleRowSelection}
+    >
+      {Object.keys(row).map((key) => (
+        <div key={key} >
+          {row[key]}
+        </div>
+      ))}
     </div>
   );
 };

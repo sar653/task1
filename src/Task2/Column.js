@@ -1,39 +1,36 @@
 import React, { useContext } from "react";
-import { DataGridContext } from "./Datagrid";
+import { DataGridContext } from "./DataGrid";
 
-const Column = ( {field,sortable,filter,children} ) => {
-  const { setSortConfig, sortConfig, setFilteredData, data } =
-    useContext(DataGridContext);
+const Column = ({ field, sortable, filter, children }) => {
+  const { setSortConfig, sortConfig, setFilteredData, data } = useContext(DataGridContext);
+
   const handleSort = () => {
     setSortConfig((prev) => ({
       field,
-      direction:
-        prev.field === field && prev.diection === "asc" ? "desc" : "asc",
+      direction: prev.field === field && prev.direction === "asc" ? "desc" : "asc",
     }));
   };
 
-  const handleFilter = (e) => {
-    const value = e.target.value;
-
+  const handleFilter = (event) => {
+    const value = event.target.value;
     setFilteredData(
-      data.filter((row) => {
-        return String(row[field]).toLowerCase().includes(value.toLowerCase());
-      })
+      data.filter((row) =>
+        String(row[field]).toLowerCase().includes(value.toLowerCase())
+      )
     );
   };
+
   return (
-    <div>
+    <div className="data-grid-column">
       <div onClick={sortable ? handleSort : undefined}>
-        {children}
-        {sortable &&
-          (sortConfig.field === field
-            ? sortConfig.direction === "asc"
-              ? "up"
-              : "down"
-            : "")}
+        {children} {sortable && (sortConfig.field === field ? (sortConfig.direction === "asc" ? "↑" : "↓") : "")}
       </div>
       {filter && (
-        <input type="text" placeholder="" onChange={handleFilter}></input>
+        <input
+          type="text"
+          placeholder={`Filter ${field}`}
+          onChange={handleFilter}
+        />
       )}
     </div>
   );

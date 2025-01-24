@@ -1,16 +1,17 @@
-import React, { Children, createContext, useMemo, useState } from "react";
+import React, { useState, useMemo, createContext } from "react";
+
+
 export const DataGridContext = createContext();
 
-const Datagrid = ( {  data,defaultSort,children}) => {
-  const [sortConfig, setSortConfig] = useState(  defaultSort||{});
-  const [selectedrows, setselectedrows] = useState(new Set());
-  const [filteredData, setfilteredData] = useState(data);
+const DataGrid = ({ data, defaultSort, children }) => {
+  const [sortConfig, setSortConfig] = useState(defaultSort || {});
+  const [selectedRows, setSelectedRows] = useState(new Set());
+  const [filteredData, setFilteredData] = useState(data);
 
   const sortedData = useMemo(() => {
-    if (sortConfig.field) return filteredData;
+    if (!sortConfig.field) return filteredData;
     const sorted = [...filteredData].sort((a, b) => {
       const dir = sortConfig.direction === "asc" ? 1 : -1;
-
       return a[sortConfig.field] > b[sortConfig.field] ? dir : -dir;
     });
     return sorted;
@@ -22,14 +23,14 @@ const Datagrid = ( {  data,defaultSort,children}) => {
         data: sortedData,
         sortConfig,
         setSortConfig,
-        selectedrows,
-        setselectedrows,
-        setfilteredData,
+        selectedRows,
+        setSelectedRows,
+        setFilteredData,
       }}
     >
-      <div> {children}</div>
+      <div className="data-grid">{children}</div>
     </DataGridContext.Provider>
   );
 };
 
-export default Datagrid;
+export default DataGrid;
