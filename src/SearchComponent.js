@@ -53,8 +53,11 @@ const SearchComponent = () => {
     };
 
     window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
-
+//remove eventlistener
   const handleSearch = (event) => {
     const value = event.target.value;
     setQuery(value);
@@ -93,8 +96,9 @@ const SearchComponent = () => {
 
       <div className="history">
         <h4>Search History</h4>
+        {/* add key  */}
         {history.map((item) => (
-          <div className="history-item">{item.title}</div>
+          <div  key={item.id} className="history-item">{item.title}</div>
         ))}
         {error}
         {/* show error message */}
