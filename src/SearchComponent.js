@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+
 // import './App.css';
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -8,7 +8,8 @@ import { debounce } from "lodash";
 const SearchComponent = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  //change loading state to false initially
   const [selectedItem, setSelectedItem] = useState(null);
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
